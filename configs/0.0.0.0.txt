@@ -1,0 +1,950 @@
+version 12.3R11.2;
+groups {
+    IFCS-ALL-lo0 {
+        interfaces {
+            lo0 {
+                unit <*> {
+                    family inet {
+                        filter {
+                            input INET-CONTROLPLANE-IN;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    10HDX {
+        /* This hardsets ifc to 10 half-duplex */
+        interfaces {
+            <ge*> {
+                ether-options {
+                    no-flow-control;
+                    link-mode half-duplex;
+                    speed {
+                        10m;
+                    }
+                }
+            }
+        }
+    }
+    100FDX {
+        /* This hardsets ifc to 100 full-duplex */
+        interfaces {
+            <ge*> {
+                ether-options {
+                    no-auto-negotiation;
+                    link-mode full-duplex;
+                    speed {
+                        100m;
+                    }
+                }
+            }
+        }
+    }
+    1000FDX {
+        /* This hardsets ifc to 1000 full-duplex */
+        interfaces {
+            <ge*> {
+                ether-options {
+                    no-auto-negotiation;
+                    link-mode full-duplex;
+                    speed {
+                        1g;
+                    }
+                }
+            }
+        }
+    }
+    JUMBO_FRAMES {
+        /* This applies the MTU setting to an ifc */
+        interfaces {
+            <*> {
+                mtu 9216;
+            }
+        }
+    }
+    INTERFACE_SHUTDOWN {
+        /* This shuts down the ifc; does not disable poe */
+        interfaces {
+            <*> {
+                disable;
+                unit 0 {
+                    disable-mlppp-inner-ppp-pfc;
+                    family ethernet-switching;
+                }
+            }
+        }
+    }
+    LACP {
+        /* This adds the lacp protocol to an ae ifc */
+        interfaces {
+            <ae*> {
+                aggregated-ether-options {
+                    lacp {
+                        active;
+                        periodic fast;
+                    }
+                }
+            }
+        }
+    }
+    TRUNK {
+        /* Turns any ifc to trunk-mode to carry more than 1 vlan but not ALL vlans */
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        port-mode trunk;
+                    }
+                }
+            }
+        }
+    }
+    VLAN_TRUNKS {
+        /* Turns any ifc to a trunked ifc that carries ALL vlans for a given L2 topology */
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        port-mode trunk;
+                        vlan {
+                            members [ 100-104 2000 2100 2800-2802 3000 ];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN2000 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 2000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN3000 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 3000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN100 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 100;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN101 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 101;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN102 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 102;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN103 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 103;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN104 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 104;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN2100 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 2100;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN2800 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 2800;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN2801 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 2801;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    VLAN2802 {
+        interfaces {
+            <*> {
+                apply-groups JUMBO_FRAMES;
+                unit 0 {
+                    family ethernet-switching {
+                        vlan {
+                            members 2802;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*
+ * dhcpd-generated /var/etc/dhcpd.options.conf
+ * Version: DHCPD release 12.3R11.2 built by builder on 2015-09-24 11:59:23 UTC
+ * Written: Thu Sep 24 14:19:56 2015
+ */
+system {
+    host-name 0.0.0.0 ;
+    auto-snapshot;
+    time-zone America/Los_Angeles;
+    default-address-selection;
+    no-redirects;
+    authentication-order radius;
+    root-authentication {
+        encrypted-password "$1$lHTlE/QM$f4HVRurjzHqFPHZ4cMN8Q/"; ## SECRET-DATA
+    }
+    name-server {
+        128.95.120.1;
+        128.95.112.1;
+    }
+    radius-server {
+        140.142.12.166 {
+            port 1645;
+            accounting-port 1646;
+            secret "$9$TQ3/IRcv8xoJ5F/Cu0RhSyeM8L7dwgn/X-wYJZp0O1cl8XN"; ## SECRET-DATA
+        }
+        140.142.214.142 {
+            port 1645;
+            accounting-port 1646;
+            secret "$9$.m5zu01yeMs2qfz39C0BIRcreKWXNbTzvLNd2g/CAp1hev8"; ## SECRET-DATA
+        }
+    }
+    login {
+        class ne-user {
+            idle-timeout 15;
+            permissions all;
+        }
+        class noc-user {
+            idle-timeout 10;
+            permissions [ interface network routing security system trace view ];
+            allow-commands "clear (interfaces|arp hostname|firewall)";
+        }
+        user ne {
+            full-name "Network Engineering";
+            uid 2001;
+            class ne-user;
+            authentication {
+                encrypted-password "$1$lHTlE/QM$f4HVRurjzHqFPHZ4cMN8Q/"; ## SECRET-DATA
+            }
+        }
+        user noc {
+            full-name "Network Operation Center";
+            uid 2010;
+            class noc-user;
+            authentication {
+                encrypted-password "$1$ZTEg0PCm$cKod8bz0U5/OV/gO6pZOi."; ## SECRET-DATA
+            }
+        }
+    }
+    services {
+        ssh {
+            root-login deny;
+            protocol-version v2;
+            connection-limit 5;
+        }
+        netconf {
+            ssh;
+        }
+        dhcp {
+            traceoptions {
+                file dhcp_logfile;
+                level all;
+                flag all;
+            }
+        }
+    }
+    syslog {
+        archive size 1m files 15;
+        user * {
+            any emergency;
+        }
+        host 140.142.37.171 {
+            any any;
+            match "!(Bridge Address:|kernel time sync|/usr/sbin/cron)";
+            facility-override local7;
+        }
+        host 140.142.37.141 {
+            any notice;
+            match "!(Bridge Address:|kernel time sync|/usr/sbin/cron)";
+            facility-override local5;
+        }
+        host 140.142.37.201 {
+            any notice;
+            match "!(Bridge Address:|kernel time sync|/usr/sbin/cron)";
+            facility-override local5;
+        }
+        file messages {
+            any any;
+            authorization info;
+            match "!(Bridge Address:|kernel time sync|/usr/sbin/cron)";
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+        file filter {
+            any any;
+            match "(Bridge Address:|kernel time sync|/usr/sbin/cron)";
+        }
+        time-format year;
+    }
+    ntp {
+        server 140.142.1.8;
+        server 140.142.2.8;
+    }
+}
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count 32;
+        }
+    }
+    alarm {
+        management-ethernet {
+            link-down ignore;
+        }
+    }
+}
+interfaces {
+    interface-range Edge_Ports {
+        member-range ge-0/0/0 to ge-0/0/45;
+    }
+    ge-0/0/0 {
+        apply-groups VLAN2100;
+    }
+    ge-0/0/1 {
+        apply-groups VLAN2100;
+    }
+    ge-0/0/2 {
+        apply-groups VLAN2100;
+    }
+    ge-0/0/3 {
+        apply-groups VLAN2100;
+    }
+    ge-0/0/4 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/5 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/6 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/7 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/8 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/9 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/10 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/11 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/12 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/13 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/14 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/15 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/16 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/17 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/18 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/19 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/20 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/21 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/22 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/23 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/24 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/25 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/26 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/27 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/28 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/29 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/30 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/31 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/32 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/33 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/34 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/35 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/36 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/37 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/38 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/39 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/40 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/41 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/42 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/43 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/44 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/45 {
+        apply-groups VLAN100;
+    }
+    ge-0/0/46 {
+        ether-options {
+            802.3ad ae0;
+        }
+    }
+    ge-0/0/47 {
+        ether-options {
+            802.3ad ae0;
+        }
+    }
+    ae0 {
+        apply-groups [ LACP VLAN_TRUNKS ];
+        aggregated-ether-options {
+            lacp {
+                active;
+                periodic fast;
+            }
+        }
+        unit 0 {
+            description Uplink;
+            family ethernet-switching;
+        }
+    }
+    lo0 {
+        apply-groups IFCS-ALL-lo0;
+        apply-groups-except VLAN_TRUNKS;
+        unit 0;
+    }
+    me0 {
+        unit 0 {
+            family inet {
+                dhcp {
+                    vendor-id Juniper-ex2200-24p-4g;
+                }
+            }
+        }
+    }
+    vlan {
+        unit 0 {
+            family inet {
+                address 1.1.1.1/24 ;
+            }
+        }
+    }
+}
+snmp {
+    location " UNSPECIFIED ";
+    contact "uw-lan@uw.edu";
+    filter-interfaces {
+        all-internal-interfaces;
+    }
+    community nech1Ac3 {
+        authorization read-only;
+        clients {
+            0.0.0.0/0 restrict;
+            10.128.37.0/24;
+            10.132.0.0/24;
+            140.142.37.0/24;
+            172.31.0.0/16;
+        }
+    }
+    trap-group juniper {
+        version v2;
+        categories {
+            chassis;
+            link;
+            startup;
+        }
+        targets {
+            140.142.37.171;
+            140.142.37.141;
+            140.142.37.201;
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 0.0.0.0/32 ;
+    }
+}
+protocols {
+    lacp {
+        inactive: traceoptions {
+            file lacp;
+            flag protocol;
+        }
+    }
+    igmp-snooping {
+        vlan all;
+    }
+    rstp {
+        interface Edge_Ports {
+            no-root-port;
+        }
+        interface all {
+            edge;
+        }
+    }
+    lldp {
+        interface all;
+    }
+    lldp-med {
+        interface all;
+    }
+}
+policy-options {
+    prefix-list INET-RADIUS-SERVER {
+        apply-path "system radius-server <*>";
+    }
+    prefix-list INET-NTP-SERVERS {
+        apply-path "system ntp server <*>";
+    }
+    prefix-list INET-DNS-SERVERS {
+        apply-path "system name-server <*>";
+    }
+    prefix-list IP4-MGT-HOSTS {
+        10.128.37.0/24;
+        10.132.0.0/24;
+        140.142.37.0/24;
+        172.31.0.0/16;
+    }
+}
+class-of-service {
+    drop-profiles {
+        DROP_70 {
+            fill-level 70;
+        }
+    }
+    forwarding-classes {
+        class NETWORK-CONTROL queue-num 7;
+        class NETWORK-MGMT queue-num 6;
+        class VOIP queue-num 5;
+        class UNIFIED-COM queue-num 4;
+        class PREMIUM-SERVICE queue-num 1;
+        class BEST-EFFORT queue-num 0;
+    }
+    interfaces {
+        ge-* {
+            scheduler-map COS-MAP;
+        }
+        ae* {
+            scheduler-map COS-MAP;
+        }
+    }
+    scheduler-maps {
+        COS-MAP {
+            forwarding-class NETWORK-CONTROL scheduler NETWORK-CONTROL-SCH;
+            forwarding-class NETWORK-MGMT scheduler NETWORK-MGMT-SCH;
+            forwarding-class VOIP scheduler VOIP-SCH;
+            forwarding-class UNIFIED-COM scheduler UNIFIED-COM-SCH;
+            forwarding-class PREMIUM-SERVICE scheduler PREMIUM-SERVICE-SCH;
+            forwarding-class BEST-EFFORT scheduler BEST-EFFORT-SCH;
+        }
+    }
+    schedulers {
+        NETWORK-CONTROL-SCH {
+            buffer-size percent 5;
+            priority strict-high;
+        }
+        NETWORK-MGMT-SCH {
+            shaping-rate percent 10;
+            buffer-size percent 10;
+            priority strict-high;
+        }
+        VOIP-SCH {
+            shaping-rate percent 5;
+            buffer-size percent 5;
+            priority strict-high;
+        }
+        UNIFIED-COM-SCH {
+            transmit-rate percent 10;
+            buffer-size percent 10;
+            priority low;
+        }
+        PREMIUM-SERVICE-SCH {
+            transmit-rate percent 70;
+            buffer-size percent 70;
+            priority low;
+        }
+        BEST-EFFORT-SCH {
+            transmit-rate {
+                remainder;
+            }
+            buffer-size {
+                remainder;
+            }
+            priority low;
+            drop-profile-map loss-priority high protocol any drop-profile DROP_70;
+        }
+    }
+}
+firewall {
+    family inet {
+        filter INET-CONTROLPLANE-IN {
+            term DHCP {
+                from {
+                    destination-port [ bootpc bootps ];
+                }
+                then accept;
+            }
+            term SSH {
+                from {
+                    source-prefix-list {
+                        IP4-MGT-HOSTS;
+                    }
+                    protocol tcp;
+                    destination-port ssh;
+                }
+                then accept;
+            }
+            term SSH-OUT {
+                from {
+                    source-prefix-list {
+                        IP4-MGT-HOSTS;
+                    }
+                    protocol tcp;
+                    source-port ssh;
+                }
+                then accept;
+            }
+            term HTTP-OUT {
+                from {
+                    protocol tcp;
+                    source-port 80;
+                }
+                then accept;
+            }
+            term NTP {
+                from {
+                    source-prefix-list {
+                        INET-NTP-SERVERS;
+                    }
+                    protocol udp;
+                    source-port ntp;
+                }
+                then accept;
+            }
+            term RADIUS {
+                from {
+                    protocol udp;
+                    source-port [ 1645 1646 ];
+                }
+                then accept;
+            }
+            term DNS {
+                from {
+                    source-prefix-list {
+                        INET-DNS-SERVERS;
+                    }
+                    protocol [ tcp udp ];
+                    source-port domain;
+                }
+                then accept;
+            }
+            term SNMP {
+                from {
+                    source-prefix-list {
+                        IP4-MGT-HOSTS;
+                    }
+                    protocol udp;
+                    destination-port snmp;
+                }
+                then accept;
+            }
+            term ICMP {
+                from {
+                    protocol icmp;
+                    icmp-type [ echo-request echo-reply unreachable time-exceeded source-quench ];
+                }
+                then accept;
+            }
+            term IGMP {
+                from {
+                    protocol [ igmp pim ];
+                }
+                then accept;
+            }
+            term DISCARDED-ALL {
+                then {
+                    discard;
+                }
+            }
+        }
+    }
+    family ethernet-switching {
+        filter VLAN-COS-NETWORK-MGMT {
+            term MARK-NETWORK-MGMT {
+                then {
+                    forwarding-class NETWORK-MGMT;
+                    loss-priority low;
+                }
+            }
+        }
+        filter VLAN-COS-VOIP {
+            term MARK-BE-GET-CONF {
+                from {
+                    protocol tcp;
+                    destination-port [ 80 411 443 ];
+                }
+                then {
+                    forwarding-class BEST-EFFORT;
+                    loss-priority low;
+                }
+            }
+            term MARK-BE-RETURN {
+                from {
+                    source-port [ 80 411 443 ];
+                }
+                then {
+                    forwarding-class BEST-EFFORT;
+                    loss-priority low;
+                }
+            }
+            term MARK-VOIP {
+                then {
+                    forwarding-class VOIP;
+                    loss-priority low;
+                }
+            }
+        }
+        filter VLAN-COS-PREMIUM-SERVICE {
+            term MARK-PREMIUM-SERVICE {
+                then {
+                    forwarding-class PREMIUM-SERVICE;
+                    loss-priority low;
+                }
+            }
+        }
+        filter VLAN-COS-BEST-EFFORT {
+            term MARK-BEST-EFFORT {
+                then {
+                    forwarding-class BEST-EFFORT;
+                    loss-priority low;
+                }
+            }
+        }
+    }
+}
+ethernet-switching-options {
+    secure-access-port {
+        interface ae0.0 {
+            dhcp-trusted;
+        }
+        vlan all {
+            examine-dhcp;
+            mac-move-limit 5 action log;
+        }
+        dhcp-snooping-file {
+            location /var/tmp/dhcp-snoop.db;
+            write-interval 60;
+        }
+    }
+    voip {
+        interface access-ports {
+            vlan VLAN3000;
+            forwarding-class VOIP;
+        }
+    }
+    storm-control {
+        interface all {
+            multicast;
+        }
+    }
+}
+vlans {
+    VLAN100 {
+        vlan-id 100;
+    }
+    VLAN101 {
+        vlan-id 101;
+    }
+    VLAN102 {
+        vlan-id 102;
+    }
+    VLAN103 {
+        vlan-id 103;
+    }
+    VLAN104 {
+        vlan-id 104;
+    }
+    VLAN2000 {
+        description "NETWORK-MGMT VLAN";
+        vlan-id 2000;
+        filter {
+            input VLAN-COS-NETWORK-MGMT;
+        }
+        l3-interface vlan.0;
+    }
+    VLAN2100 {
+        vlan-id 2100;
+    }
+    VLAN2800 {
+        vlan-id 2800;
+    }
+    VLAN2801 {
+        vlan-id 2801;
+    }
+    VLAN2802 {
+        vlan-id 2802;
+    }
+    VLAN3000 {
+        description "VOIP VLAN";
+        vlan-id 3000;
+        filter {
+            input VLAN-COS-VOIP;
+        }
+    }
+}
